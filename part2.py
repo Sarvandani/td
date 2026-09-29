@@ -105,6 +105,21 @@ moyenne_glissante = data["Temperatures"].rolling(30).mean()
 print("\nMoyenne glissante sur 30 valeurs :")
 print(moyenne_glissante)
 
+# =============================================================================
+# Visualisation de la moyenne glissante
+# =============================================================================
+
+plt.plot(data.index, data["Temperatures"], label="Températures")
+plt.plot(data.index, moyenne_glissante, label="Moyenne glissante (30)")
+
+plt.xlabel("Date")
+plt.ylabel("Température (°C)")
+plt.title("Températures et moyenne glissante")
+plt.legend()
+plt.grid()
+
+plt.show()
+
 
 
 
