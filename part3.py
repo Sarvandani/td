@@ -50,6 +50,13 @@ M = 4
 # Création de la matrice G : N mesures × 4 coefficients
 G = np.zeros((N, M))
 
+# Chaque colonne de G correspond à un coefficient du modèle
+G[:, 0] = np.cos(2 * np.pi * t)  # coefficient A
+G[:, 1] = np.sin(2 * np.pi * t)  # coefficient B
+G[:, 2] = t                       # coefficient C : tendance linéaire
+G[:, 3] = 1.0                     # coefficient D : constante
+
+
 
 
 
