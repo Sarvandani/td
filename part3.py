@@ -35,6 +35,21 @@ t = dates_decimales - 2000.0
 # Vecteur des données expérimentales
 d = temperatures
 
+# =============================================================================
+# Construire la matrice du modèle G
+# =============================================================================
+
+# Nombre de mesures de température
+N = len(t)
+
+# Le modèle contient 4 coefficients inconnus :
+# T(t) = A*cos(2πt) + B*sin(2πt) + C*t + D
+#          saisonnier     saisonnier    tendance  constante
+M = 4
+
+# Création de la matrice G : N mesures × 4 coefficients
+G = np.zeros((N, M))
+
 
 
 
