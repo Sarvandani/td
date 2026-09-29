@@ -100,6 +100,20 @@ amplitude_pic_a_pic = 2 * amplitude
 
 print(f"\nAmplitude pic-à-pic : {amplitude_pic_a_pic:.1f} °C")
 
+# =============================================================================
+# 3. Identifier la date des maximums de température (phase)
+# =============================================================================
+
+phase = np.arctan2(B, A)
+
+date_maximum = np.mod(
+    phase / (2 * np.pi),
+    1
+)
+
+print(f"Date du maximum : {date_maximum:.2f}")
+
+
 
 
 
