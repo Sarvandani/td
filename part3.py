@@ -113,6 +113,15 @@ date_maximum = np.mod(
 
 print(f"Date du maximum : {date_maximum:.2f}")
 
+# =============================================================================
+# 4. Évaluer la tendance linéaire
+# =============================================================================
+
+tendance = C
+
+print(f"Tendance linéaire : {tendance:.3f} °C/an")
+
+
 
 
 
