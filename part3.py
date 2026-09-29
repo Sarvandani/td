@@ -144,6 +144,16 @@ plt.legend()
 plt.grid()
 plt.tight_layout()
 
+# =============================================================================
+# 5. Sauvegarder la figure en PDF
+# =============================================================================
+
+plt.savefig(
+    Path(__file__).resolve().parent / "part3_modele_temperature.pdf"
+)
+
+plt.show()
+
 
 
 
