@@ -13,3 +13,14 @@ data = pd.read_csv(
     names=["dates", "dates_decimales", "Temperatures"],
     parse_dates=["dates"]
 )
+
+# =============================================================================
+# 2. Visualiser l'entête du DataFrame et le type des données
+# =============================================================================
+
+print("\n===== ÉTAPE 2 : Visualiser l'entête et le type des données =====")
+print(data.head())
+
+print("\nTypes des données :")
+print(data.dtypes)
+
