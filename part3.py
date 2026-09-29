@@ -56,6 +56,28 @@ G[:, 1] = np.sin(2 * np.pi * t)  # coefficient B
 G[:, 2] = t                       # coefficient C : tendance linéaire
 G[:, 3] = 1.0                     # coefficient D : constante
 
+# =============================================================================
+# Estimer A, B, C et D par la méthode des moindres carrés
+# =============================================================================
+
+# On cherche les coefficients qui ajustent au mieux
+# le modèle aux températures mesurées : G @ m ≈ d
+m, residuals, rank, s = np.linalg.lstsq(
+    G,
+    d,
+    rcond=None
+)
+
+# Récupération des 4 coefficients estimés
+A, B, C, D = m
+
+print("Coefficients du modèle :")
+print(f"A = {A:.6f}")
+print(f"B = {B:.6f}")
+print(f"C = {C:.6f}")
+print(f"D = {D:.6f}")
+# Calculer les températures modélisées
+temperatures_modele = G @ m
 
 
 
