@@ -96,5 +96,15 @@ print("\nMoyennes mensuelles :")
 print(moyennes_mensuelles)
 print(data.index)
 
+# =============================================================================
+# Calcul de la moyenne glissante sur 30 valeurs
+# =============================================================================
+
+moyenne_glissante = data["Temperatures"].rolling(30).mean()
+
+print("\nMoyenne glissante sur 30 valeurs :")
+print(moyenne_glissante)
+
+
 
 
