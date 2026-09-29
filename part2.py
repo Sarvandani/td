@@ -85,6 +85,15 @@ print("\nDataFrame avec dates comme index :")
 print(data.head())
 
 print("\nIndex du DataFrame :")
+
+# =============================================================================
+# Calcul des moyennes mensuelles
+# =============================================================================
+
+moyennes_mensuelles = data.resample("ME").mean()
+
+print("\nMoyennes mensuelles :")
+print(moyennes_mensuelles)
 print(data.index)
 
 
