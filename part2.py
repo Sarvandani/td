@@ -44,4 +44,20 @@ print(data.iloc[2])
 print("\n4ème élément de la 3ème colonne :")
 print(data.iloc[3, 2])
 
+# =============================================================================
+# 4. Visualiser la série
+# =============================================================================
+
+data.plot(
+    x="dates",
+    y="Temperatures"
+)
+
+plt.xlabel("Date")
+plt.ylabel("Température (°C)")
+plt.title("Série temporelle des températures")
+plt.grid()
+plt.tight_layout()
+plt.show()
+
 
