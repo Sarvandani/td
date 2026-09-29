@@ -90,6 +90,17 @@ plt.plot(
     label="Températures"
 )
 
+# =============================================================================
+# 2. Déterminer l'amplitude pic-à-pic
+# =============================================================================
+
+amplitude = np.sqrt(A**2 + B**2)
+
+amplitude_pic_a_pic = 2 * amplitude
+
+print(f"\nAmplitude pic-à-pic : {amplitude_pic_a_pic:.1f} °C")
+
+
 
 
 
