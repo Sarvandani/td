@@ -68,4 +68,24 @@ print("\nTempérature moyenne :", data["Temperatures"].mean())
 print("Température minimale :", data["Temperatures"].min())
 print("Température maximale :", data["Temperatures"].max())
 
+# =============================================================================
+# 6. Choisir la colonne dates comme index
+# =============================================================================
+
+# On relit le même fichier en utilisant la colonne dates comme index
+data = pd.read_csv(
+    fichier,
+    header=None,
+    names=["dates", "dates_decimales", "Temperatures"],
+    parse_dates=["dates"],
+    index_col="dates"
+)
+
+print("\nDataFrame avec dates comme index :")
+print(data.head())
+
+print("\nIndex du DataFrame :")
+print(data.index)
+
+
 
