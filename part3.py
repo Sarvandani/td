@@ -79,6 +79,19 @@ print(f"D = {D:.6f}")
 # Calculer les températures modélisées
 temperatures_modele = G @ m
 
+# =============================================================================
+# 1. Afficher les températures
+# =============================================================================
+
+plt.plot(
+    dates_decimales,
+    temperatures,
+    linewidth=0.5,
+    label="Températures"
+)
+
+
+
 
 
 
