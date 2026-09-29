@@ -60,4 +60,12 @@ plt.grid()
 plt.tight_layout()
 plt.show()
 
+# =============================================================================
+# 5. Calculer les statistiques
+# =============================================================================
+
+print("\nTempérature moyenne :", data["Temperatures"].mean())
+print("Température minimale :", data["Temperatures"].min())
+print("Température maximale :", data["Temperatures"].max())
+
 
