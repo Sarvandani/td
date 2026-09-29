@@ -121,6 +121,29 @@ tendance = C
 
 print(f"Tendance linéaire : {tendance:.3f} °C/an")
 
+# =============================================================================
+# Afficher le modèle en rouge
+# =============================================================================
+
+plt.plot(
+    dates_decimales,
+    temperatures_modele,
+    "r",
+    linewidth=2,
+    label=(
+        f"Modèle : pic-à-pic = {amplitude_pic_a_pic:.1f} °C, "
+        f"phase = {date_maximum:.2f}, "
+        f"tendance = {tendance:.3f} °C/an"
+    )
+)
+
+plt.xlabel("Année")
+plt.ylabel("Température (°C)")
+plt.title("Série temporelle des températures et modèle")
+plt.legend()
+plt.grid()
+plt.tight_layout()
+
 
 
 
