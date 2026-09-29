@@ -23,5 +23,18 @@ dates_decimales, temperatures = np.loadtxt(
     unpack=True
 )
 
+# data cleaning: Supprimer les éventuelles valeurs invalides
+valides = np.isfinite(dates_decimales) & np.isfinite(temperatures)
+
+dates_decimales = dates_decimales[valides]
+temperatures = temperatures[valides]
+
+# Temps en années depuis 2000
+t = dates_decimales - 2000.0
+
+# Vecteur des données expérimentales
+d = temperatures
+
+
 
 
