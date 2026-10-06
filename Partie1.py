@@ -135,6 +135,26 @@ plt.colorbar()
 
 plt.show()
 
+# -----------------------------------------------------------------------------
+# Question : Choisir un seuil radiométrique
+# (seuil simple = moyenne - 0.5 × écart-type).
+# -----------------------------------------------------------------------------
+
+# Moyenne de toutes les valeurs des pixels.
+moyenne = np.mean(array)
+
+# L'écart-type indique à quel point les valeurs sont dispersées
+# autour de la moyenne.
+ecart_type = np.std(array)
+
+# Le seuil est la valeur utilisée pour séparer deux classes.
+seuil = moyenne - 0.5 * ecart_type
+
+print("\nMoyenne :", moyenne)
+print("Écart-type :", ecart_type)
+print("Seuil :", seuil)
+
+
 
 
 
