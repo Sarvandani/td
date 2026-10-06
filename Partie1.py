@@ -177,6 +177,25 @@ plt.colorbar()
 plt.show()
 
 
+# -----------------------------------------------------------------------------
+# Question : Écrire une fonction set_mirror qui retourne
+# une image miroir avec la commande np.flipud().
+# -----------------------------------------------------------------------------
+
+def set_mirror(image):
+
+    # np.flipud() signifie "flip up-down".
+    # Il inverse l'ordre des lignes :
+    #
+    # haut ↔ bas
+    image_miroir = np.flipud(image)
+
+    return image_miroir
+
+
+# Appliquer la fonction à la bande rouge.
+array_miroir = set_mirror(array)
+
 
 
 
