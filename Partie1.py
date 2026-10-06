@@ -24,3 +24,7 @@ print("Nombre de colonnes :", ds.RasterXSize)
 print("Nombre de lignes :", ds.RasterYSize)
 print("Nombre de bandes :", ds.RasterCount)
 
+# Le système de coordonnées permet de positionner l'image sur la Terre.
+print("\nProjection :")
+print(ds.GetProjection())
+
