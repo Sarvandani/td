@@ -28,3 +28,19 @@ print("Nombre de bandes :", ds.RasterCount)
 print("\nProjection :")
 print(ds.GetProjection())
 
+# -----------------------------------------------------------------------------
+# Résolution spatiale
+# -----------------------------------------------------------------------------
+
+# Ici, un pixel représente donc une zone de 10 m × 10 m au sol.
+
+geo = ds.GetGeoTransform()
+
+resolution_x = geo[1]
+resolution_y = abs(geo[5])  # abs() transforme -10 en 10
+
+print("\nRésolution spatiale :")
+print("Taille d'un pixel en X :", resolution_x, "m")
+print("Taille d'un pixel en Y :", resolution_y, "m")
+
+
