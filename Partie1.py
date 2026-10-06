@@ -239,6 +239,13 @@ plt.title("Composition en couleurs naturelles")
 
 plt.show()
 
+image_infrarouge = np.dstack((
+    infrared_stretch,
+    red_stretch,
+    green_stretch
+))
+
+
 
 
 
