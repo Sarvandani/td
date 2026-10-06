@@ -17,3 +17,10 @@ fichier = "2025-07-25-00_Sentinel-2_L2A_B4B3B2B8.tiff"
 # Ouvrir le fichier raster.
 ds = gdal.Open(fichier)
 
+# RasterXSize = nombre de colonnes (largeur en pixels)
+# RasterYSize = nombre de lignes (hauteur en pixels)
+# RasterCount = nombre de bandes
+print("Nombre de colonnes :", ds.RasterXSize)
+print("Nombre de lignes :", ds.RasterYSize)
+print("Nombre de bandes :", ds.RasterCount)
+
