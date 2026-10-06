@@ -43,4 +43,14 @@ print("\nRésolution spatiale :")
 print("Taille d'un pixel en X :", resolution_x, "m")
 print("Taille d'un pixel en Y :", resolution_y, "m")
 
+# La bande 1 du fichier correspond à Sentinel-2 B4 = Rouge.
+band1 = ds.GetRasterBand(1)
+
+# Le type de données indique comment les valeurs des pixels sont stockées.
+# Par exemple :
+# Byte   → 8 bits
+# UInt16 → 16 bits
+print("\nType de données :")
+print(gdal.GetDataTypeName(band1.DataType))
+
 
