@@ -101,6 +101,21 @@ plt.title("Histogramme de la bande rouge")
 
 plt.show()
 
+# -----------------------------------------------------------------------------
+# Question : Écrire une fonction d'étirement linéaire des contrastes
+# entre percentiles prenant en entrée un tableau NumPy et retournant
+# le tableau étiré.
+# -----------------------------------------------------------------------------
+
+def stretch(image):
+
+  
+    valeur_min, valeur_max = np.percentile(image, (2, 98))
+
+    image_stretch = np.clip(image_stretch, 0, 1)
+
+    return image_stretch
+
 
 
 
