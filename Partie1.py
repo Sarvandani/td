@@ -87,5 +87,20 @@ plt.colorbar()
 
 plt.show()
 
+# -----------------------------------------------------------------------------
+# Question : Calculer et afficher son histogramme avec plt.hist().
+# -----------------------------------------------------------------------------
+
+plt.figure()
+
+plt.hist(array.ravel(), bins=100)
+
+plt.xlabel("Valeur du pixel")
+plt.ylabel("Nombre de pixels")
+plt.title("Histogramme de la bande rouge")
+
+plt.show()
+
+
 
 
