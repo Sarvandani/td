@@ -218,6 +218,12 @@ green = ds.GetRasterBand(2).ReadAsArray()
 blue = ds.GetRasterBand(3).ReadAsArray()
 infrared = ds.GetRasterBand(4).ReadAsArray()
 
+# Améliorer le contraste de chaque bande avec la fonction stretch().
+red_stretch = stretch(red)
+green_stretch = stretch(green)
+blue_stretch = stretch(blue)
+infrared_stretch = stretch(infrared)
+
 
 
 
