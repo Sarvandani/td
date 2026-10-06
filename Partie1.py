@@ -53,4 +53,39 @@ band1 = ds.GetRasterBand(1)
 print("\nType de données :")
 print(gdal.GetDataTypeName(band1.DataType))
 
+# -----------------------------------------------------------------------------
+# Question : Charger la bande 1 (Sentinel-2 B4 – Rouge)
+# dans un tableau NumPy appelé array.
+# -----------------------------------------------------------------------------
+
+# ReadAsArray() transforme la bande raster en tableau NumPy 2D.
+# Chaque case du tableau correspond à la valeur d'un pixel.
+array = band1.ReadAsArray()
+
+# array.shape donne :
+# (nombre de lignes, nombre de colonnes)
+print("\nDimensions du tableau :", array.shape)
+
+
+# -----------------------------------------------------------------------------
+# Question : Afficher cette bande en niveaux de gris avec plt.imshow().
+# Tester différentes valeurs min et max pour améliorer les contrastes.
+# -----------------------------------------------------------------------------
+
+plt.figure()
+
+# cmap="gray" affiche l'image en niveaux de gris.
+#
+# vmin = valeur affichée en noir
+# vmax = valeur affichée en blanc
+#
+# Les valeurs intermédiaires apparaissent en différents niveaux de gris.
+plt.imshow(array, cmap="gray", vmin=0, vmax=255)
+
+plt.title("Bande rouge B4")
+plt.colorbar()
+
+plt.show()
+
+
 
