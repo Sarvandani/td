@@ -116,6 +116,26 @@ def stretch(image):
 
     return image_stretch
 
+# Appliquer la fonction à la bande rouge.
+array_stretch = stretch(array)
+
+
+# Afficher le résultat.
+plt.figure()
+
+plt.imshow(
+    array_stretch,
+    cmap="gray",
+    vmin=0,
+    vmax=1
+)
+
+plt.title("Bande rouge après correction du contraste")
+plt.colorbar()
+
+plt.show()
+
+
 
 
 
