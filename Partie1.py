@@ -245,6 +245,16 @@ image_infrarouge = np.dstack((
     green_stretch
 ))
 
+# Afficher la composition infrarouge.
+plt.figure()
+
+plt.imshow(image_infrarouge)
+
+plt.title("Composition infrarouge couleur (B8, B4, B3)")
+
+plt.show()
+
+
 
 
 
