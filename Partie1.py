@@ -196,6 +196,16 @@ def set_mirror(image):
 # Appliquer la fonction à la bande rouge.
 array_miroir = set_mirror(array)
 
+# Afficher le résultat.
+plt.figure()
+
+plt.imshow(array_miroir, cmap="gray")
+
+plt.title("Image miroir")
+
+plt.show()
+
+
 
 
 
