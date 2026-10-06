@@ -230,6 +230,16 @@ image_rgb = np.dstack((
     blue_stretch
 ))
 
+# Afficher la composition en couleurs naturelles.
+plt.figure()
+
+plt.imshow(image_rgb)
+
+plt.title("Composition en couleurs naturelles")
+
+plt.show()
+
+
 
 
 
