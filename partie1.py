@@ -150,3 +150,31 @@ print("\nMoyenne :", moyenne)
 print("Écart-type :", ecart_type)
 print("Seuil :", seuil)
 
+# -----------------------------------------------------------------------------
+# Question : Créer une image binaire :
+# -----------------------------------------------------------------------------
+
+# Au départ, tous les pixels sont donc considérés comme de l'eau.
+image_binaire = np.zeros(array.shape)
+
+# array > seuil crée une condition pour tous les pixels.
+#
+# Si la valeur d'un pixel est supérieure au seuil,
+# la valeur correspondante dans image_binaire devient 1.
+#
+# Les autres pixels restent à 0.
+image_binaire[array > seuil] = 1
+
+
+# Afficher l'image binaire.
+plt.figure()
+
+# 0 apparaît en noir et 1 en blanc.
+plt.imshow(image_binaire, cmap="gray")
+
+plt.title("Image binaire : Eau = 0, Terre = 1")
+plt.colorbar()
+
+plt.show()
+
+
