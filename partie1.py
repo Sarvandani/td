@@ -86,8 +86,21 @@ plt.show()
 # etap 2:  -------------------------------------------------------------------
 
 def stretch(image):
+
     valeur_min, valeur_max = np.percentile(image, (2, 98))
 
+    # Normaliser les valeurs :
+    #
+    # valeur_min → 0
+    # valeur_max → 1
+ 
+    image_stretch = (
+        (image - valeur_min) /
+        (valeur_max - valeur_min)
+    )
+
+    # Certaines valeurs peuvent être < 0 ou > 1.
+    #
     # np.clip() les force à rester entre 0 et 1 :
     # valeur < 0 → 0
     # valeur > 1 → 1
@@ -114,4 +127,3 @@ plt.title("Bande rouge après correction du contraste")
 plt.colorbar()
 
 plt.show()
-
