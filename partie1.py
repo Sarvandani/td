@@ -48,3 +48,24 @@ band1 = ds.GetRasterBand(1)
 print("\nType de données :")
 print(gdal.GetDataTypeName(band1.DataType))
 
+# ReadAsArray() transforme la bande raster en tableau NumPy 2D.
+array = band1.ReadAsArray()
+
+# array.shape donne :
+# (nombre de lignes, nombre de colonnes)
+print("\nDimensions du tableau :", array.shape)
+
+
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
+plt.figure()
+
+plt.imshow(array, cmap="gray", vmin=0, vmax=255)
+
+plt.title("Bande rouge B4")
+plt.colorbar()
+
+plt.show()
+
+
