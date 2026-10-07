@@ -204,5 +204,21 @@ plt.title("Image miroir")
 
 plt.show()
 
+# =============================================================================
+# ÉTAPE 5 – COMPOSITION COLORÉE
+# =============================================================================
+
+# Les 4 bandes sont enregistrées dans le fichier dans cet ordre :
+#
+# Bande 1 = B4 = Rouge
+# Bande 2 = B3 = Vert
+# Bande 3 = B2 = Bleu
+# Bande 4 = B8 = Proche infrarouge
+
+# Charger chaque bande dans un tableau NumPy.
+red = ds.GetRasterBand(1).ReadAsArray()
+green = ds.GetRasterBand(2).ReadAsArray()
+blue = ds.GetRasterBand(3).ReadAsArray()
+infrared = ds.GetRasterBand(4).ReadAsArray()
 
 
