@@ -27,3 +27,15 @@ print("Nombre de bandes :", ds.RasterCount)
 # Le système de coordonnées permet de positionner l'image sur la Terre.
 print("\nProjection :")
 print(ds.GetProjection())
+
+# Résolution spatiale
+# -----------------------------------------------------------------------------
+
+geo = ds.GetGeoTransform()
+
+resolution_x = geo[1]
+resolution_y = abs(geo[5])  
+print("\nRésolution spatiale :")
+print("Taille d'un pixel en X :", resolution_x, "m")
+print("Taille d'un pixel en Y :", resolution_y, "m")
+
