@@ -68,4 +68,18 @@ plt.colorbar()
 
 plt.show()
 
+plt.figure()
+
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
+# bins=100 regroupe les valeurs dans 100 intervalles.
+plt.hist(array.ravel(), bins=100)
+
+plt.xlabel("Valeur du pixel")
+plt.ylabel("Nombre de pixels")
+plt.title("Histogramme de la bande rouge")
+
+plt.show()
+
 
