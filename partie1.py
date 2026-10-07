@@ -227,5 +227,13 @@ green_stretch = stretch(green)
 blue_stretch = stretch(blue)
 infrared_stretch = stretch(infrared)
 
+image_rgb = np.dstack((
+    red_stretch,
+    green_stretch,
+    blue_stretch
+))
+
+
+
 
 
