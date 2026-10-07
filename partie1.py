@@ -242,6 +242,12 @@ plt.title("Composition en couleurs naturelles (B4, B3, B2)")
 
 plt.show()
 
+image_infrarouge = np.dstack((
+    infrared_stretch,
+    red_stretch,
+    green_stretch
+))
+
 
 
 
