@@ -82,4 +82,36 @@ plt.title("Histogramme de la bande rouge")
 
 plt.show()
 
+ -----------------------------------------------------------------------------
+# etap 2:  -------------------------------------------------------------------
+
+def stretch(image):
+    valeur_min, valeur_max = np.percentile(image, (2, 98))
+
+    # np.clip() les force à rester entre 0 et 1 :
+    # valeur < 0 → 0
+    # valeur > 1 → 1
+    image_stretch = np.clip(image_stretch, 0, 1)
+
+    return image_stretch
+
+
+# Appliquer la fonction à la bande rouge.
+array_stretch = stretch(array)
+
+
+# Afficher le résultat.
+plt.figure()
+
+plt.imshow(
+    array_stretch,
+    cmap="gray",
+    vmin=0,
+    vmax=1
+)
+
+plt.title("Bande rouge après correction du contraste")
+plt.colorbar()
+
+plt.show()
 
