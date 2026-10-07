@@ -1,1 +1,3 @@
 conda create -n geo -c conda-forge python numpy gdal matplotlib
+
+# setting > python > Interpreter > Add New Interpreter > select existing > type: Conda > environnement: geo
