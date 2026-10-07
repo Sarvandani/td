@@ -1,0 +1,1 @@
+conda create -n geo -c conda-forge python numpy gdal matplotlib
