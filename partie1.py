@@ -177,4 +177,17 @@ plt.colorbar()
 
 plt.show()
 
+# =============================================================================
+# ÉTAPE 4 – IMAGE MIROIR
+# =============================================================================
+# -----------------------------------------------------------------------------
+# Question : Écrire une fonction set_mirror qui retourne
+# une image miroir avec la commande np.flipud().
+# -----------------------------------------------------------------------------
+
+def set_mirror(image):
+
+    # np.flipud() signifie "flip up-down"
+    image_miroir = np.flipud(image)
+    return image_miroir
 
