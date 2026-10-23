@@ -1,10 +1,10 @@
 # ============================================================
 # TD MODELISATION - INFORMATIQUE
 # PARTIE 1 : INTERFACE GRAPHIQUE AVEC PYQT5
-# ACTIVITE 1
+# ACTIVITE 2  (contient 1)
 # ============================================================
 # Activite 1 : on utilise QWidget, on cree la fenetre et on lui donne un titre.
-#              on utilise QApplication, show, exec_, on lance et on affiche.
+# Activite 2 : on utilise QPushButton et QFont, on cree les 3 boutons.
 # ============================================================
 # PyQt5.QtWidgets : les elements visibles de l'interface
 #   QApplication    : lance le programme PyQt (obligatoire)
@@ -46,6 +46,16 @@ class GUI_Main(QWidget):
         # ----------------------------------------------------
         QWidget.__init__(self)
         self.setWindowTitle("Ma premiere interface")
+
+        # ----------------------------------------------------
+        # ACTIVITE 2
+        # on utilise QPushButton : on cree les 3 boutons
+        # on utilise QFont : police de Quitter (Comic Sans MS 16)
+        # ----------------------------------------------------
+        self.b_charger_fichier_ = QPushButton("Charger un fichier", self)
+        self.b_tracer_donnees_ = QPushButton("Tracer les donnees", self)
+        self.b_quitter_ = QPushButton("Quitter", self)
+        self.b_quitter_.setFont(QFont("Comic Sans MS", 16))
 
 
 def main():
