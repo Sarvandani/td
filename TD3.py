@@ -1,11 +1,12 @@
 # ============================================================
 # TD MODELISATION - INFORMATIQUE
 # PARTIE 1 : INTERFACE GRAPHIQUE AVEC PYQT5
-# ACTIVITE 3  (contient 1 et 2)
+# ACTIVITE 4  (contient 1, 2, 3)
 # ============================================================
 # Activite 1 : on utilise QWidget, on cree la fenetre et on lui donne un titre.
 # Activite 2 : on utilise QPushButton et QFont, on cree les 3 boutons.
 # Activite 3 : on utilise QGridLayout, on place les widgets dans une grille.
+# Activite 4 : on utilise create_button et clicked.connect, on relie le clic a une action.
 # ============================================================
 # PyQt5.QtWidgets : les elements visibles de l'interface
 #   QApplication    : lance le programme PyQt (obligatoire)
@@ -49,25 +50,39 @@ class GUI_Main(QWidget):
         self.setWindowTitle("Ma premiere interface")
 
         # ----------------------------------------------------
-        # ACTIVITE 2
-        # on utilise QPushButton : on cree les 3 boutons
-        # on utilise QFont : police de Quitter (Comic Sans MS 16)
+        # ACTIVITE 4
+        # on utilise create_button : on cree les 3 boutons ET on connecte le clic
+        # (a l'activite 2 c'etait QPushButton tout seul)
         # ----------------------------------------------------
-        self.b_charger_fichier_ = QPushButton("Charger un fichier", self)
-        self.b_tracer_donnees_ = QPushButton("Tracer les donnees", self)
-        self.b_quitter_ = QPushButton("Quitter", self)
+        self.b_charger_fichier_ = self.create_button("Charger un fichier", self.charger_fichier)
+        self.b_tracer_donnees_ = self.create_button("Tracer les donnees", self.tracer_donnees)
+        self.b_quitter_ = self.create_button("Quitter", qApp.quit)
         self.b_quitter_.setFont(QFont("Comic Sans MS", 16))
 
         # ----------------------------------------------------
         # ACTIVITE 3
-        # on utilise QGridLayout : on place les boutons (sinon ils se recouvrent)
-        # PDF : charger ligne 0, tracer ligne 3, quitter ligne 5
+        # on utilise QGridLayout : on place les boutons
         # ----------------------------------------------------
         monLayout = QGridLayout()
         monLayout.addWidget(self.b_charger_fichier_, 0, 0, 1, 2)
         monLayout.addWidget(self.b_tracer_donnees_, 3, 0, 1, 2)
         monLayout.addWidget(self.b_quitter_, 5, 0, 1, 2)
         self.setLayout(monLayout)
+
+    # ----------------------------------------------------
+    # ACTIVITE 4
+    # on utilise clicked.connect : un clic lance une methode
+    # ----------------------------------------------------
+    def create_button(self, libelle, method):
+        button = QPushButton(libelle, self)
+        button.clicked.connect(method)
+        return button
+
+    def charger_fichier(self):
+        print("Debut du chargement")
+
+    def tracer_donnees(self):
+        print("Debut du tracage")
 
 
 def main():
