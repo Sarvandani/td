@@ -1,13 +1,14 @@
 # ============================================================
 # TD MODELISATION - INFORMATIQUE
 # PARTIE 1 : INTERFACE GRAPHIQUE AVEC PYQT5
-# ACTIVITE 5  (contient 1, 2, 3, 4)
+# ACTIVITE 6  (contient 1, 2, 3, 4, 5)
 # ============================================================
 # Activite 1 : on utilise QWidget, on cree la fenetre et on lui donne un titre.
 # Activite 2 : on utilise QPushButton et QFont, on cree les boutons.
 # Activite 3 : on utilise QGridLayout, on place les widgets dans une grille.
 # Activite 4 : on utilise create_button et clicked.connect, on relie le clic a une action.
 # Activite 5 : on utilise QLabel et QLineEdit, on affiche un titre et une zone pour ecrire.
+# Activite 6 : on utilise QFileDialog.getOpenFileName et setText, on choisit un fichier.
 # ============================================================
 # PyQt5.QtWidgets : les elements visibles de l'interface
 #   QApplication    : lance le programme PyQt (obligatoire)
@@ -64,7 +65,6 @@ class GUI_Main(QWidget):
         # ACTIVITE 5
         # on utilise QLabel : titre (on ne tape pas)
         # on utilise QLineEdit : zone pour ecrire
-        # AlignCenter centre le texte dans le label, pas au milieu de la fenetre
         # ----------------------------------------------------
         self.label_filename_ = QLabel("Nom du fichier de donnees", self)
         self.label_filename_.setAlignment(Qt.AlignCenter)
@@ -80,7 +80,6 @@ class GUI_Main(QWidget):
         # ----------------------------------------------------
         # ACTIVITE 3
         # on utilise QGridLayout : on place tous les widgets
-        # col 0 = label, col 1 = LineEdit (gauche -> droite)
         # ----------------------------------------------------
         monLayout = QGridLayout()
         monLayout.addWidget(self.b_charger_fichier_, 0, 0, 1, 2)
@@ -103,12 +102,21 @@ class GUI_Main(QWidget):
         return button
 
     # ----------------------------------------------------
-    # ACTIVITE 5
-    # on utilise text() : on lit ce qui est ecrit dans le LineEdit
-    # Tracer ne dessine pas encore (activite 7)
+    # ACTIVITE 6
+    # on utilise QFileDialog.getOpenFileName : fenetre pour choisir un fichier
+    # setText(filename) : montre le chemin DANS LA FENETRE (le champ blanc)
+    # print(...)         : montre le chemin DANS LE TERMINAL (console)
+    # English:
+    #   setText = write in the INTERFACE box (Nom du fichier de donnees)
+    #   print   = write in the TERMINAL (not in the window)
     # ----------------------------------------------------
     def charger_fichier(self):
-        print("Nom du fichier de donnees : ", self.edit_filename_.text())
+        filename, filetype = QFileDialog.getOpenFileName(
+            self, "Choisir un fichier", "", "Tous les fichiers (*)"
+        )
+        if filename:
+            self.edit_filename_.setText(filename)
+            print("Nom du fichier de donnees :", filename)
 
     def tracer_donnees(self):
         print("Debut du tracage")
