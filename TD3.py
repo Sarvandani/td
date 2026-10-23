@@ -1,12 +1,13 @@
 # ============================================================
 # TD MODELISATION - INFORMATIQUE
 # PARTIE 1 : INTERFACE GRAPHIQUE AVEC PYQT5
-# ACTIVITE 4  (contient 1, 2, 3)
+# ACTIVITE 5  (contient 1, 2, 3, 4)
 # ============================================================
 # Activite 1 : on utilise QWidget, on cree la fenetre et on lui donne un titre.
-# Activite 2 : on utilise QPushButton et QFont, on cree les 3 boutons.
+# Activite 2 : on utilise QPushButton et QFont, on cree les boutons.
 # Activite 3 : on utilise QGridLayout, on place les widgets dans une grille.
 # Activite 4 : on utilise create_button et clicked.connect, on relie le clic a une action.
+# Activite 5 : on utilise QLabel et QLineEdit, on affiche un titre et une zone pour ecrire.
 # ============================================================
 # PyQt5.QtWidgets : les elements visibles de l'interface
 #   QApplication    : lance le programme PyQt (obligatoire)
@@ -60,12 +61,35 @@ class GUI_Main(QWidget):
         self.b_quitter_.setFont(QFont("Comic Sans MS", 16))
 
         # ----------------------------------------------------
+        # ACTIVITE 5
+        # on utilise QLabel : titre (on ne tape pas)
+        # on utilise QLineEdit : zone pour ecrire
+        # AlignCenter centre le texte dans le label, pas au milieu de la fenetre
+        # ----------------------------------------------------
+        self.label_filename_ = QLabel("Nom du fichier de donnees", self)
+        self.label_filename_.setAlignment(Qt.AlignCenter)
+        self.edit_filename_ = QLineEdit(self)
+
+        self.label_coord_ = QLabel("Coordonnees x1 y1 x2 y2", self)
+        self.label_coord_.setAlignment(Qt.AlignCenter)
+        self.edit_coord_ = QLineEdit(self)
+        self.edit_coord_.setMaximumWidth(50)
+
+        self.b_effacer_ = self.create_button("Effacer", self.reset)
+
+        # ----------------------------------------------------
         # ACTIVITE 3
-        # on utilise QGridLayout : on place les boutons
+        # on utilise QGridLayout : on place tous les widgets
+        # col 0 = label, col 1 = LineEdit (gauche -> droite)
         # ----------------------------------------------------
         monLayout = QGridLayout()
         monLayout.addWidget(self.b_charger_fichier_, 0, 0, 1, 2)
+        monLayout.addWidget(self.label_filename_, 1, 0)
+        monLayout.addWidget(self.edit_filename_, 1, 1)
+        monLayout.addWidget(self.label_coord_, 2, 0)
+        monLayout.addWidget(self.edit_coord_, 2, 1)
         monLayout.addWidget(self.b_tracer_donnees_, 3, 0, 1, 2)
+        monLayout.addWidget(self.b_effacer_, 4, 0, 1, 2)
         monLayout.addWidget(self.b_quitter_, 5, 0, 1, 2)
         self.setLayout(monLayout)
 
@@ -78,11 +102,19 @@ class GUI_Main(QWidget):
         button.clicked.connect(method)
         return button
 
+    # ----------------------------------------------------
+    # ACTIVITE 5
+    # on utilise text() : on lit ce qui est ecrit dans le LineEdit
+    # Tracer ne dessine pas encore (activite 7)
+    # ----------------------------------------------------
     def charger_fichier(self):
-        print("Debut du chargement")
+        print("Nom du fichier de donnees : ", self.edit_filename_.text())
 
     def tracer_donnees(self):
         print("Debut du tracage")
+
+    def reset(self):
+        print("Effacer")
 
 
 def main():
