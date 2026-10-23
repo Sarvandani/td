@@ -1,7 +1,7 @@
 # ============================================================
 # TD MODELISATION - INFORMATIQUE
 # PARTIE 1 : INTERFACE GRAPHIQUE AVEC PYQT5
-# ACTIVITE 6  (contient 1, 2, 3, 4, 5)
+# ACTIVITE 7  (contient 1, 2, 3, 4, 5, 6)
 # ============================================================
 # Activite 1 : on utilise QWidget, on cree la fenetre et on lui donne un titre.
 # Activite 2 : on utilise QPushButton et QFont, on cree les boutons.
@@ -9,6 +9,7 @@
 # Activite 4 : on utilise create_button et clicked.connect, on relie le clic a une action.
 # Activite 5 : on utilise QLabel et QLineEdit, on affiche un titre et une zone pour ecrire.
 # Activite 6 : on utilise QFileDialog.getOpenFileName et setText, on choisit un fichier.
+# Activite 7 : on utilise QGraphicsScene et QGraphicsView, on cree la zone de dessin.
 # ============================================================
 # PyQt5.QtWidgets : les elements visibles de l'interface
 #   QApplication    : lance le programme PyQt (obligatoire)
@@ -73,9 +74,25 @@ class GUI_Main(QWidget):
         self.label_coord_ = QLabel("Coordonnees x1 y1 x2 y2", self)
         self.label_coord_.setAlignment(Qt.AlignCenter)
         self.edit_coord_ = QLineEdit(self)
-        self.edit_coord_.setMaximumWidth(50)
+        self.edit_coord_.setMaximumWidth(90)
+        self.edit_coord_.setPlaceholderText("100 200 300 400")
 
         self.b_effacer_ = self.create_button("Effacer", self.reset)
+
+        # ----------------------------------------------------
+        # ACTIVITE 7
+        # on utilise QGraphicsScene : ou on ajoute les traits
+        # on utilise QGraphicsView : le cadre sous Effacer (vide au debut)
+        # English:
+        #   QGraphicsScene = the paper (we draw lines ON it with addLine)
+        #   QGraphicsView  = the frame you SEE under Effacer
+        #   It starts empty. After Tracer, the line appears in this frame.
+        # ----------------------------------------------------
+        wid, hgt = 600, 400
+        self.scene_ = QGraphicsScene(0, 0, wid, hgt, self)
+        self.scene_.addRect(0, 0, wid, hgt)
+        self.view_ = QGraphicsView(self.scene_, self)
+        self.view_.setMinimumSize(wid + 100, hgt + 100)
 
         # ----------------------------------------------------
         # ACTIVITE 3
@@ -89,7 +106,8 @@ class GUI_Main(QWidget):
         monLayout.addWidget(self.edit_coord_, 2, 1)
         monLayout.addWidget(self.b_tracer_donnees_, 3, 0, 1, 2)
         monLayout.addWidget(self.b_effacer_, 4, 0, 1, 2)
-        monLayout.addWidget(self.b_quitter_, 5, 0, 1, 2)
+        monLayout.addWidget(self.view_, 5, 0, 1, 2)
+        monLayout.addWidget(self.b_quitter_, 6, 0, 1, 2)
         self.setLayout(monLayout)
 
     # ----------------------------------------------------
@@ -118,11 +136,23 @@ class GUI_Main(QWidget):
             self.edit_filename_.setText(filename)
             print("Nom du fichier de donnees :", filename)
 
+    # ----------------------------------------------------
+    # ACTIVITE 7
+    # on utilise addLine : on lit x1 y1 x2 y2 et on dessine le segment
+    # Exemple : 100 200 300 400
+    # ----------------------------------------------------
     def tracer_donnees(self):
-        print("Debut du tracage")
+        valeurs = self.edit_coord_.text().split()
+        if len(valeurs) != 4:
+            print("Saisir 4 nombres : x1 y1 x2 y2  (ex: 100 200 300 400)")
+            return
+        x1, y1, x2, y2 = [float(v) for v in valeurs]
+        self.scene_.addLine(x1, y1, x2, y2)
 
+    # on utilise clear : on efface le dessin (bouton Effacer)
     def reset(self):
-        print("Effacer")
+        self.scene_.clear()
+        self.scene_.addRect(self.scene_.sceneRect())
 
 
 def main():
