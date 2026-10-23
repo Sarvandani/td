@@ -1,10 +1,11 @@
 # ============================================================
 # TD MODELISATION - INFORMATIQUE
 # PARTIE 1 : INTERFACE GRAPHIQUE AVEC PYQT5
-# ACTIVITE 2  (contient 1)
+# ACTIVITE 3  (contient 1 et 2)
 # ============================================================
 # Activite 1 : on utilise QWidget, on cree la fenetre et on lui donne un titre.
 # Activite 2 : on utilise QPushButton et QFont, on cree les 3 boutons.
+# Activite 3 : on utilise QGridLayout, on place les widgets dans une grille.
 # ============================================================
 # PyQt5.QtWidgets : les elements visibles de l'interface
 #   QApplication    : lance le programme PyQt (obligatoire)
@@ -56,6 +57,17 @@ class GUI_Main(QWidget):
         self.b_tracer_donnees_ = QPushButton("Tracer les donnees", self)
         self.b_quitter_ = QPushButton("Quitter", self)
         self.b_quitter_.setFont(QFont("Comic Sans MS", 16))
+
+        # ----------------------------------------------------
+        # ACTIVITE 3
+        # on utilise QGridLayout : on place les boutons (sinon ils se recouvrent)
+        # PDF : charger ligne 0, tracer ligne 3, quitter ligne 5
+        # ----------------------------------------------------
+        monLayout = QGridLayout()
+        monLayout.addWidget(self.b_charger_fichier_, 0, 0, 1, 2)
+        monLayout.addWidget(self.b_tracer_donnees_, 3, 0, 1, 2)
+        monLayout.addWidget(self.b_quitter_, 5, 0, 1, 2)
+        self.setLayout(monLayout)
 
 
 def main():
