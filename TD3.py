@@ -1,13 +1,14 @@
 # ============================================================
 # TD MODELISATION - INFORMATIQUE
 # PARTIE 2 : ANALYSE D IMAGES SENTINEL-2 AVEC PYQT5
-# ACTIVITE 5  (contient 1 a 4)
+# ACTIVITE 6  (contient 1 a 5)
 # ============================================================
 # Activite 1 : on utilise QApplication et QWidget, on cree la fenetre et on lance PyQt5.
 # Activite 2 : on utilise QPushButton, QLabel, QLineEdit et QTextEdit, on cree les widgets.
 # Activite 3 : on utilise QGridLayout et addWidget, on organise la fenetre.
 # Activite 4 : on utilise clicked.connect et qApp.quit, on relie les boutons aux actions.
 # Activite 5 : on utilise QFileDialog et GDAL, on charge un TIFF et on affiche ses informations.
+# Activite 6 : on utilise NumPy, Matplotlib et FigureCanvas, on affiche une bande et son histogramme.
 # ============================================================
 # PyQt5.QtWidgets : les elements visibles de l interface
 #   QApplication    : demarre l application PyQt5 (obligatoire)
@@ -21,6 +22,9 @@
 #   QFileDialog     : boite de dialogue pour choisir un fichier TIFF
 #   QMessageBox     : affiche un message en cas d erreur
 # osgeo.gdal       : ouvre un TIFF et lit les metadonnees des bandes
+# numpy            : filtre les pixels et les valeurs invalides
+# matplotlib.pyplot : cree l image et l histogramme
+# FigureCanvas     : affiche la figure Matplotlib dans PyQt5
 # ============================================================
 
 from PyQt5.QtWidgets import QApplication, QWidget
@@ -29,6 +33,9 @@ from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtWidgets import qApp
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from osgeo import gdal
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
 
 class GuiTiffViewer(QWidget):
@@ -63,6 +70,14 @@ class GuiTiffViewer(QWidget):
         self.ds = None
 
         # ----------------------------------------------------
+        # ACTIVITE 6
+        # Integration : plt.figure cree la figure
+        # FigureCanvas integre Matplotlib dans la fenetre PyQt5
+        # ----------------------------------------------------
+        self.figure = plt.figure(figsize=(8, 4))
+        self.canvas = FigureCanvas(self.figure)
+
+        # ----------------------------------------------------
         # ACTIVITE 3
         # Puces 1 et 2 : QGridLayout et addWidget placent les widgets
         # Puce 3 : une ligne est reservee aux graphiques (activite 6)
@@ -75,7 +90,8 @@ class GuiTiffViewer(QWidget):
         monLayout.addWidget(self.edit_band, 2, 1)
         monLayout.addWidget(self.b_afficher_, 3, 0, 1, 2)
         monLayout.addWidget(self.info_label, 4, 0, 1, 2)
-        monLayout.addWidget(self.b_quitter_, 5, 0, 1, 2)
+        monLayout.addWidget(self.canvas, 5, 0, 1, 2)
+        monLayout.addWidget(self.b_quitter_, 6, 0, 1, 2)
         self.setLayout(monLayout)
 
     # ----------------------------------------------------
@@ -107,7 +123,6 @@ class GuiTiffViewer(QWidget):
             return
 
         self.ds = ds
-        # Puce 2 : setText affiche le chemin dans le QLineEdit
         self.edit_filename_.setText(filename)
         # Puce 3 : dimensions, bandes, projection et resolution
         geo = ds.GetGeoTransform()
@@ -117,8 +132,46 @@ class GuiTiffViewer(QWidget):
         info += f"Resolution pixel: {geo[1]} x {abs(geo[5])}"
         self.info_label.setText(info)
 
+    # ----------------------------------------------------
+    # ACTIVITE 6
+    # Puce 1 : QLineEdit.text et int lisent le numero de bande
+    # Puce 2 : GDAL GetRasterBand et ReadAsArray lisent les pixels
+    # Puce 3 : Matplotlib affiche l image et l histogramme
+    # Puce 4 : FigureCanvas.draw actualise l affichage
+    # ----------------------------------------------------
     def afficher_bande(self):
-        print("Debut de l'affichage")
+        if self.ds is None:
+            QMessageBox.warning(self, "Erreur", "Charger d'abord un fichier TIFF.")
+            return
+        try:
+            band_num = int(self.edit_band.text())
+        except ValueError:
+            QMessageBox.warning(self, "Erreur", "Saisir un numero de bande entier.")
+            return
+        if not 1 <= band_num <= self.ds.RasterCount:
+            QMessageBox.warning(self, "Erreur", f"Choisir une bande entre 1 et {self.ds.RasterCount}.")
+            return
+
+        # Puce 2 : GDAL lit la bande choisie dans un tableau NumPy
+        band = self.ds.GetRasterBand(band_num)
+        image = band.ReadAsArray()
+        nodata = band.GetNoDataValue()
+        valeurs = image[np.isfinite(image)]
+        if nodata is not None:
+            valeurs = valeurs[valeurs != nodata]
+
+        # Puce 3 : subplots Matplotlib pour image et histogramme
+        self.figure.clear()
+        ax1 = self.figure.add_subplot(1, 2, 1)
+        ax1.imshow(image, cmap="gray")
+        ax1.set_title(f"Bande {band_num}")
+
+        ax2 = self.figure.add_subplot(1, 2, 2)
+        ax2.hist(valeurs.ravel(), bins=100, color="gray")
+        ax2.set_title("Histogramme")
+        self.figure.tight_layout()
+        # Puce 4 : actualiser la figure dans PyQt5
+        self.canvas.draw()
 
 
 def main():
