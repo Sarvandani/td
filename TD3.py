@@ -1,12 +1,13 @@
 # ============================================================
 # TD MODELISATION - INFORMATIQUE
 # PARTIE 2 : ANALYSE D IMAGES SENTINEL-2 AVEC PYQT5
-# ACTIVITE 4  (contient 1 a 3)
+# ACTIVITE 5  (contient 1 a 4)
 # ============================================================
 # Activite 1 : on utilise QApplication et QWidget, on cree la fenetre et on lance PyQt5.
 # Activite 2 : on utilise QPushButton, QLabel, QLineEdit et QTextEdit, on cree les widgets.
 # Activite 3 : on utilise QGridLayout et addWidget, on organise la fenetre.
 # Activite 4 : on utilise clicked.connect et qApp.quit, on relie les boutons aux actions.
+# Activite 5 : on utilise QFileDialog et GDAL, on charge un TIFF et on affiche ses informations.
 # ============================================================
 # PyQt5.QtWidgets : les elements visibles de l interface
 #   QApplication    : demarre l application PyQt5 (obligatoire)
@@ -17,12 +18,17 @@
 #   QTextEdit       : zone pour afficher les informations du TIFF
 #   QGridLayout     : place les widgets en lignes et colonnes
 #   qApp            : application en cours (pour Quitter)
+#   QFileDialog     : boite de dialogue pour choisir un fichier TIFF
+#   QMessageBox     : affiche un message en cas d erreur
+# osgeo.gdal       : ouvre un TIFF et lit les metadonnees des bandes
 # ============================================================
 
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtWidgets import QPushButton, QLabel, QLineEdit, QTextEdit
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtWidgets import qApp
+from PyQt5.QtWidgets import QFileDialog, QMessageBox
+from osgeo import gdal
 
 
 class GuiTiffViewer(QWidget):
@@ -54,6 +60,7 @@ class GuiTiffViewer(QWidget):
         # Puce 5 : QTextEdit pour afficher les informations
         self.info_label = QTextEdit(self)
         self.info_label.setReadOnly(True)
+        self.ds = None
 
         # ----------------------------------------------------
         # ACTIVITE 3
@@ -81,8 +88,34 @@ class GuiTiffViewer(QWidget):
         button.clicked.connect(method)
         return button
 
+    # ----------------------------------------------------
+    # ACTIVITE 5
+    # Puce 1 : QFileDialog.getOpenFileName selectionne un fichier
+    # Puce 2 : QLineEdit.setText affiche le chemin
+    # Puce 3 : gdal.Open lit le TIFF et ses informations
+    # ----------------------------------------------------
     def charger_fichier(self):
-        print("Debut du chargement")
+        filename, filetype = QFileDialog.getOpenFileName(
+            self, "Choisir un fichier TIFF", "", "Images TIFF (*.tif *.tiff)"
+        )
+        if not filename:
+            return
+        # Puce 3 : GDAL ouvre le fichier TIFF
+        ds = gdal.Open(filename)
+        if ds is None:
+            QMessageBox.warning(self, "Erreur", "Impossible d'ouvrir ce fichier TIFF.")
+            return
+
+        self.ds = ds
+        # Puce 2 : setText affiche le chemin dans le QLineEdit
+        self.edit_filename_.setText(filename)
+        # Puce 3 : dimensions, bandes, projection et resolution
+        geo = ds.GetGeoTransform()
+        info = f"Taille: {ds.RasterXSize} x {ds.RasterYSize}\n"
+        info += f"Bandes: {ds.RasterCount}\n"
+        info += f"Projection: {ds.GetProjection()}\n"
+        info += f"Resolution pixel: {geo[1]} x {abs(geo[5])}"
+        self.info_label.setText(info)
 
     def afficher_bande(self):
         print("Debut de l'affichage")
