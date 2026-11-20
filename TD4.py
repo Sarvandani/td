@@ -231,6 +231,50 @@ def main():
     print(f"Plan du banc 1 : z = {a1:.4f}x + {b1:.4f}y + {c1:.2f}")
     print(f"Plan du banc 2 : z = {a2:.4f}x + {b2:.4f}y + {c2:.2f}")
 
+    # --------------------------------------------------------
+    # Calcul du vecteur normal, du strike et du pendage
+    # --------------------------------------------------------
+
+    # 1. VECTEUR NORMAL
+    # Le vecteur normal est perpendiculaire au plan.
+    # Pour un plan z = ax + by + c, la normale est (a, b, -1).
+
+    normale1 = np.array([a1, b1, -1])
+    normale2 = np.array([a2, b2, -1])
+
+    print("Vecteur normal du banc 1 :", normale1)
+    print("Vecteur normal du banc 2 :", normale2)
+
+    # 2. STRIKE (AZIMUT)
+    # Direction du plan par rapport au nord.
+    # np.arctan2() calcule l'angle en radians.
+    # np.degrees() le convertit en degrés.
+    # % 360 ramène l'angle entre 0° et 360°.
+
+    strike1 = (90 + np.degrees(np.arctan2(a1, b1))) % 360
+    strike2 = (90 + np.degrees(np.arctan2(a2, b2))) % 360
+
+    print("Strike du banc 1 :", round(strike1, 2), "°")
+    print("Strike du banc 2 :", round(strike2, 2), "°")
+
+    # 3. PENDAGE (DIP)
+    # Angle entre le plan géologique et l'horizontale.
+    # On utilise la formule du PDF.
+    # np.sqrt() calcule la racine carrée.
+    # np.arccos() calcule l'angle en radians.
+    # np.degrees() convertit le résultat en degrés.
+
+    pendage1 = np.degrees(
+        np.arccos(1 / np.sqrt(a1 ** 2 + b1 ** 2 + 1))
+    )
+
+    pendage2 = np.degrees(
+        np.arccos(1 / np.sqrt(a2 ** 2 + b2 ** 2 + 1))
+    )
+
+    print("Pendage du banc 1 :", round(pendage1, 2), "°")
+    print("Pendage du banc 2 :", round(pendage2, 2), "°")
+
     
 
     plt.show()
