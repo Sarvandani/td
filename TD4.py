@@ -1,3 +1,4 @@
+
 """
 TD MODÉLISATION – INFORMATIQUE
 PARTIE 2 : EXERCICE DE GÉOLOGIE STRUCTURALE
@@ -185,7 +186,52 @@ def main():
 
     fig1.tight_layout()
 
- 
+    # ========================================================
+    # ÉTAPE 2 – AJUSTEMENT D'UN PLAN (énoncé, page 4)
+    # ========================================================
+    # Objectif : trouver le plan z = a*x + b*y + c
+    # qui représente au mieux les points de chaque banc.
+    #
+    # np.column_stack() : construire la matrice des coordonnées.
+    # np.linalg.lstsq() : calculer a, b et c par les moindres carrés,
+    # en minimisant les écarts verticaux entre les points et le plan.
+
+    def fit_plane(x, y, z):
+        """Calculer les coefficients du plan z = a*x + b*y + c."""
+
+        # Calculer les coordonnées moyennes des points.
+        # On soustrait ces moyennes pour améliorer la précision.
+        x0 = x.mean()
+        y0 = y.mean()
+
+        # Créer une matrice : chaque ligne représente un point.
+        # Colonnes : X recentré, Y recentré et constante (1).
+        A = np.column_stack((
+            x - x0,
+            y - y0,
+            np.ones(len(x))
+        ))
+
+        # Trouver les coefficients du plan par régression linéaire.
+        # [0] récupère les coefficients calculés par lstsq().
+        a, b, c0 = np.linalg.lstsq(A, z, rcond=None)[0]
+
+        # Corriger la constante pour revenir aux coordonnées initiales.
+        c = c0 - a * x0 - b * y0
+
+        return a, b, c
+
+    # Calculer un plan pour chacun des deux bancs géologiques.
+    a1, b1, c1 = fit_plane(x1, y1, z1)
+    a2, b2, c2 = fit_plane(x2, y2, z2)
+
+    # Afficher les équations des deux plans.
+    # .4f : afficher 4 chiffres après la virgule (4 décimales).
+    # .2f : afficher 2 chiffres après la virgule (2 décimales).
+    print(f"Plan du banc 1 : z = {a1:.4f}x + {b1:.4f}y + {c1:.2f}")
+    print(f"Plan du banc 2 : z = {a2:.4f}x + {b2:.4f}y + {c2:.2f}")
+
+    
 
     plt.show()
 
