@@ -1,4 +1,3 @@
-
 """
 TD MODÉLISATION – INFORMATIQUE
 PARTIE 2 : EXERCICE DE GÉOLOGIE STRUCTURALE
@@ -275,7 +274,60 @@ def main():
     print("Pendage du banc 1 :", round(pendage1, 2), "°")
     print("Pendage du banc 2 :", round(pendage2, 2), "°")
 
-    
+    # ========================================================
+    # ÉTAPE 3 – VISUALISATION 3D (énoncé, page 5)
+    # ========================================================
+    # Objectifs :
+    # - Afficher les points mesurés en 3D.
+    # - Construire les surfaces des plans ajustés.
+    # - Superposer les points et les plans.
+    #
+    # On réutilise directement :
+    # - x1, y1, z1 et x2, y2, z2 de l'étape 1 ;
+    # - a1, b1, c1 et a2, b2, c2 de l'étape 2.
+    #
+    # np.linspace() : créer une série de valeurs régulières.
+    # np.meshgrid() : construire une grille X, Y.
+    # plot_surface() : afficher une surface en 3D.
+
+    # Créer une nouvelle figure indépendante.
+    fig2 = plt.figure(figsize=(11, 8))
+
+    # Ajouter des axes en trois dimensions.
+    ax2 = fig2.add_subplot(111, projection="3d")
+
+    # Afficher les deux bancs et leurs plans.
+    for x, y, z, a, b, c, couleur, nom in (
+        (x1, y1, z1, a1, b1, c1, "red", "Banc 1"),
+        (x2, y2, z2, a2, b2, c2, "blue", "Banc 2")
+    ):
+
+        # Afficher les points de mesure.
+        ax2.scatter(x, y, z, color=couleur, s=35, label=nom)
+
+
+        # Construire une grille de 20 x 20 points.
+        X, Y = np.meshgrid(
+            np.linspace(x.min(), x.max(), 20),
+            np.linspace(y.min(), y.max(), 20)
+        )
+
+        # Calculer les altitudes du plan sur la grille.
+        Z = a * X + b * Y + c
+
+        # Afficher le plan avec transparence.
+        # 4. Afficher le plan.
+        ax2.plot_surface(X, Y, Z, color=couleur, alpha=0.35)
+
+    # Ajouter un titre et les noms des axes.
+    ax2.set_title(
+        "Étape 3 – Points et plans ajustés en 3D"
+    )
+    ax2.set_xlabel("Est (m)")
+    ax2.set_ylabel("Nord (m)")
+    ax2.set_zlabel("Altitude (m)")
+    ax2.legend()
+
 
     plt.show()
 
