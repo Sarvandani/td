@@ -220,6 +220,17 @@ plt.title("Figure 4 — Étape 7 : Influence de l'angle d'éjection")
 plt.legend()
 plt.grid(alpha=0.3)
 
+# Étape 7 — Comparer la gravité terrestre et lunaire (numpy, matplotlib).
+plt.figure(5, figsize=(9, 5))
+for nom, gravite in (("Terre", 9.81), ("Lune", 1.62)):
+    y_gravite = trajectoire(x, 80, v0, 0, gravite)
+    y_gravite[y_gravite < 0] = np.nan
+    plt.plot(x, y_gravite, label=f"{nom} : g = {gravite} m/s²")
+plt.xlabel("Distance x (m)")
+plt.ylabel("Hauteur y (m)")
+plt.title("Figure 5 — Étape 7 : Influence de la gravité")
+plt.legend()
+plt.grid(alpha=0.3)
 
 # Afficher ensemble les cinq figures ; aucune sauvegarde automatique.
 plt.show()
