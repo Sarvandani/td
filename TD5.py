@@ -70,6 +70,13 @@ plt.title("Figure 1 — Étape 3 : Trajectoire balistique")
 plt.legend()
 plt.grid(alpha=0.3)
 
+# Étape 4 — Tirer une vitesse et un angle aléatoires (random).
+def ejecta_aleatoire():
+    vitesse = max(1.0, random.gauss(v0, dv0))
+    angle = random.uniform(theta_min, theta_max)
+    return vitesse, angle
+
+
 
 # Afficher ensemble les cinq figures ; aucune sauvegarde automatique.
 plt.show()
