@@ -208,6 +208,17 @@ for numero, profil in enumerate(etats):
 plt.ioff()
 
 
+# Étape 7 — Comparer plusieurs angles d'éjection (numpy, matplotlib).
+plt.figure(4, figsize=(9, 5))
+for angle in (60, 70, 80, 85):
+    y_angle = trajectoire(x, angle, v0, 0, g)
+    y_angle[y_angle < 0] = np.nan
+    plt.plot(x, y_angle, label=f"{angle}°")
+plt.xlabel("Distance x (m)")
+plt.ylabel("Hauteur y (m)")
+plt.title("Figure 4 — Étape 7 : Influence de l'angle d'éjection")
+plt.legend()
+plt.grid(alpha=0.3)
 
 
 # Afficher ensemble les cinq figures ; aucune sauvegarde automatique.
