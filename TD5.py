@@ -69,7 +69,6 @@ plt.ylabel("Hauteur y (m)")
 plt.title("Figure 1 — Étape 3 : Trajectoire balistique")
 plt.legend()
 plt.grid(alpha=0.3)
-plt.show()
 
 # Étape 4 — Tirer une vitesse et un angle aléatoires (random).
 def ejecta_aleatoire():
@@ -77,4 +76,5 @@ def ejecta_aleatoire():
     angle = random.uniform(theta_min, theta_max)
     return vitesse, angle
 
+plt.show()
 
