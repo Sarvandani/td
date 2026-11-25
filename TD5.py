@@ -27,3 +27,17 @@ Aucun fichier n'est enregistré automatiquement.
 #    t = (x-x0)/(v0*cos(theta))
 #    y(x) = y0 + (x-x0)*tan(theta)
 #           - g*(x-x0)**2/(2*v0**2*cos(theta)**2)
+
+# ============================================================
+# QUESTION 2 — PROGRAMMATION INITIALE
+# ============================================================
+import random
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Étape 1 — Construire le maillage et initialiser la topographie (numpy).
+xmax = 400.0
+dx = 2.0
+x = np.arange(0, xmax, dx)
+h = np.zeros(len(x))
+print(f"Étape 1 : {len(x)} points sur le maillage.")
