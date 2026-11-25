@@ -76,6 +76,7 @@ def ejecta_aleatoire():
     angle = random.uniform(theta_min, theta_max)
     return vitesse, angle
 
+
 # Étape 5 — # S1 — Déterminer le premier point d'impact.
 # Trouver le premier point d'impact (numpy).
 def point_impact(y, h):
@@ -84,5 +85,51 @@ def point_impact(y, h):
         return None              # Aucun impact dans le maillage.
     return int(np.argmax(contacts) + 1)
 
-plt.show()
 
+# Étape 5 (répétée dans le PDF) —
+# # S2 — Préparer la simulation.
+etats = [h.copy()]               # Sol plat avant le premier éjecta.
+intervalle = max(1, n_iter // n_plots)
+random.seed(42)                  # Résultats identiques à chaque exécution.
+
+# S3 — Construire le cône avec plusieurs éjectas.
+for iteration in range(n_iter):
+
+    # Choisir une vitesse et un angle.
+    vitesse, angle = ejecta_aleatoire()
+
+    # Calculer la trajectoire.
+    y = trajectoire(x, angle, vitesse, 0, g)
+
+    # Trouver le point d'impact.
+    indice = point_impact(y, h)
+
+    # Ajouter de la matière au sol.
+    if indice is not None:
+        h[indice] += dh
+
+    # Garder le centre du cratère à zéro.
+    h[0] = 0.0
+
+    # Mémoriser  le sol pour le montrer dans l'étape 6.
+    if (iteration + 1) % intervalle == 0 or iteration == n_iter - 1:
+        etats.append(h.copy())
+
+# S4 — Construire le profil complet par symétrie.
+x_total = np.concatenate((-x[:0:-1], x))
+h_total = np.concatenate((h[:0:-1], h))
+
+# S5 — Afficher la topographie finale (figure 3).
+# Étape 5 — Montrer le cône terminé dans la figure 3 (matplotlib).
+plt.figure(3, figsize=(9, 5))
+plt.fill_between(x_total, 0, h_total, color="red", alpha=0.3)
+plt.plot(x_total, h_total, color="black")
+plt.xlabel("Distance au conduit (m)")
+plt.ylabel("Hauteur (m)")
+plt.title("Figure 3 — Étape 5 : Topographie finale sans pente critique")
+plt.grid(alpha=0.3)
+
+
+
+# Afficher ensemble les cinq figures ; aucune sauvegarde automatique.
+plt.show()
