@@ -76,5 +76,13 @@ def ejecta_aleatoire():
     angle = random.uniform(theta_min, theta_max)
     return vitesse, angle
 
+# Étape 5 — # S1 — Déterminer le premier point d'impact.
+# Trouver le premier point d'impact (numpy).
+def point_impact(y, h):
+    contacts = y[1:] <= h[1:]    # Ignorer x = 0 : point de départ.
+    if not np.any(contacts):
+        return None              # Aucun impact dans le maillage.
+    return int(np.argmax(contacts) + 1)
+
 plt.show()
 
