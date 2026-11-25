@@ -51,3 +51,23 @@ theta_max = 89.0          # Éviter exactement 90°.
 g = 9.81                  # Gravité terrestre (m/s²).
 n_iter = 10000            # Tester d'abord avec 10, puis augmenter.
 n_plots = 10              # Nombre approximatif d'états pour l'animation.
+
+# Étape 3 — Calculer la trajectoire d'un éjecta (numpy).
+def trajectoire(x, angle0, vitesse0, h0, gravite=g):
+    angle = np.deg2rad(angle0)
+    return h0 + x * np.tan(angle) - gravite * x**2 / (2 * vitesse0**2 * np.cos(angle)**2)
+
+
+# Étape 3 — Vérifier la trajectoire dans la figure 1 (matplotlib).
+plt.figure(1, figsize=(9, 5))
+y_test = trajectoire(x, 80, v0, 0, g)
+y_test[y_test < 0] = np.nan       # Masquer la partie sous le sol.
+plt.plot(x, y_test, label="Angle = 80°")
+plt.axhline(0, color="black", linewidth=1)
+plt.xlabel("Distance x (m)")
+plt.ylabel("Hauteur y (m)")
+plt.title("Figure 1 — Étape 3 : Trajectoire balistique")
+plt.legend()
+plt.grid(alpha=0.3)
+plt.show()
+
