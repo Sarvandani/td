@@ -37,3 +37,14 @@ dx = 2.0
 x = np.arange(0, xmax, dx)
 h = np.zeros(len(x))
 print(f"Étape 1 : {len(x)} points sur le maillage.")
+
+# Étape 2 — Définir les paramètres initiaux.
+dh = 0.8                  # Épaisseur ajoutée par éjecta (m).
+v0 = 51.0                 # Vitesse moyenne choisie (m/s).
+dv0 = 7.0                 # Dispersion illustrative (m/s).
+theta_min = 75.0          # Angle minimal (degrés).
+theta_max = 89.0          # Éviter exactement 90°.
+g = 9.81                  # Gravité terrestre (m/s²).
+n_iter = 10000            # Tester d'abord avec 10, puis augmenter.
+n_plots = 10              # Nombre approximatif d'états pour l'animation.
+
