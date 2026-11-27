@@ -1,4 +1,5 @@
 """TD — Construction d'un cône de scories : questions 1 et 2.
+
 """
 
 # ============================================================
@@ -71,6 +72,8 @@ def ejecta_aleatoire():
     vitesse = max(1.0, random.gauss(v0, dv0))
     angle = random.uniform(theta_min, theta_max)
     return vitesse, angle
+
+
 # Étape 5 — # S1 — Déterminer le premier point d'impact.
 # Trouver le premier point d'impact (numpy).
 def point_impact(y, h):
@@ -122,6 +125,7 @@ plt.xlabel("Distance au conduit (m)")
 plt.ylabel("Hauteur (m)")
 plt.title("Figure 3 — Étape 5 : Topographie finale sans pente critique")
 plt.grid(alpha=0.3)
+
 
 # ============================================================
 # ÉTAPE 6 — ANIMATION DE LA CROISSANCE DU CÔNE
@@ -199,4 +203,31 @@ for numero, profil in enumerate(etats):
 
 # S6 — Terminer l'animation.
 plt.ioff()
+
+
+# Étape 7 — Comparer plusieurs angles d'éjection (numpy, matplotlib).
+plt.figure(4, figsize=(9, 5))
+for angle in (60, 70, 80, 85):
+    y_angle = trajectoire(x, angle, v0, 0, g)
+    y_angle[y_angle < 0] = np.nan
+    plt.plot(x, y_angle, label=f"{angle}°")
+plt.xlabel("Distance x (m)")
+plt.ylabel("Hauteur y (m)")
+plt.title("Figure 4 — Étape 7 : Influence de l'angle d'éjection")
+plt.legend()
+plt.grid(alpha=0.3)
+
+# Étape 7 — Comparer la gravité terrestre et lunaire (numpy, matplotlib).
+plt.figure(5, figsize=(9, 5))
+for nom, gravite in (("Terre", 9.81), ("Lune", 1.62)):
+    y_gravite = trajectoire(x, 80, v0, 0, gravite)
+    y_gravite[y_gravite < 0] = np.nan
+    plt.plot(x, y_gravite, label=f"{nom} : g = {gravite} m/s²")
+plt.xlabel("Distance x (m)")
+plt.ylabel("Hauteur y (m)")
+plt.title("Figure 5 — Étape 7 : Influence de la gravité")
+plt.legend()
+plt.grid(alpha=0.3)
+
+# Afficher ensemble les cinq figures ; aucune sauvegarde automatique.
 plt.show()
