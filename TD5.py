@@ -122,4 +122,81 @@ plt.xlabel("Distance au conduit (m)")
 plt.ylabel("Hauteur (m)")
 plt.title("Figure 3 — Étape 5 : Topographie finale sans pente critique")
 plt.grid(alpha=0.3)
+
+# ============================================================
+# ÉTAPE 6 — ANIMATION DE LA CROISSANCE DU CÔNE
+# ============================================================
+
+# S1 — Préparer la figure d'animation.
+plt.ion()  # Activer le mode interactif.
+
+fig_animation = plt.figure(2, figsize=(9, 5))
+axe = fig_animation.gca()  # Récupérer les axes de la figure.
+
+# Générateur aléatoire réservé aux trajectoires rouges.
+rng_affichage = random.Random(123)
+
+
+# S2 — Parcourir les topographies sauvegardées.
+#Recall that etats contains the saved versions of the ground from Étape 5.
+#numero is the snapshot number, and profil contains the ground heights in that snapshot.
+for numero, profil in enumerate(etats):
+
+    # Effacer le dessin précédent.
+    axe.clear()
+
+    # S3 - Dessiner la topographie du cône
+    # The black line shows the surface of the volcano.
+    # The shaded area underneath represents the accumulated volcanic material.
+    # Reproduire la partie gauche par symétrie.
+    #The first line creates the left side using symmetry, just like Étape 5.
+    h_animation = np.concatenate((profil[:0:-1], profil))
+
+    # Colorier le cône en rouge
+    axe.fill_between(
+        x_total, 0, h_animation,
+        color="red", alpha=0.5
+    )
+
+    # Dessiner la surface du cône en noir.
+    axe.plot(x_total, h_animation, color="black", linewidth=1.5)
+
+    # S4 — Dessiner les trajectoires rouges
+    # The light-red parabolic curves show illustrative paths of particles ejected from the crater.
+    #S3 shows the actual topography calculated in Étape 5. S4 adds illustrative trajectories only; they do not change the cone.
+    #For every animation frame, we draw five illustrative trajectories.
+    for j in range(5):
+
+        # Choisir une vitesse et un angle aléatoires.
+        vitesse = max(1.0, rng_affichage.gauss(v0, dv0))
+        angle = rng_affichage.uniform(theta_min, theta_max)
+
+        # Calculer la trajectoire.
+        y_rouge = trajectoire(x, angle, vitesse, 0, g)
+
+        # Masquer la trajectoire sous le cône.
+        y_rouge[y_rouge < profil] = np.nan
+
+        # Afficher la trajectoire à droite et à gauche.
+        axe.plot(x, y_rouge, color="red", alpha=0.25)
+        axe.plot(-x, y_rouge, color="red", alpha=0.25)
+
+    # S5 — Configurer et actualiser la figure.
+    axe.set_xlim(-xmax, xmax)
+    axe.set_ylim(0, max(100, h.max() * 1.1))
+    axe.set_xlabel("Distance au conduit (m)")
+    axe.set_ylabel("Hauteur (m)")
+    axe.set_title(
+        f"Figure 2 — Étape 6 : Croissance "
+        f"({numero}/{len(etats) - 1})"
+    )
+    axe.grid(alpha=0.3)
+
+    # Montrer la nouvelle image.
+    fig_animation.canvas.draw_idle()
+    plt.pause(0.05)
+
+
+# S6 — Terminer l'animation.
+plt.ioff()
 plt.show()
